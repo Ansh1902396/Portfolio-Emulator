@@ -1,104 +1,77 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
 interface BootLoaderProps {
   onLoadingComplete: () => void
 }
 
+const bootSequence = [
+  "Initializing system...",
+  "Loading kernel modules...",
+  "Mounting file systems...",
+  "Starting network services...",
+  "Configuring GUI interface...",
+  "Launching user environment..."
+]
+
+const asciiArt = `
+ _______  __   __  ______   ______   __   __
+|       ||  | |  ||      | |      | |  | |  |
+|    ___||  | |  ||  _    ||  _    ||  |_|  |
+|   | __ |  |_|  || | |   || | |   ||       |
+|   ||  ||       || |_|   || |_|   ||       |
+|   |_| ||       ||       ||       | |     |
+|_______||_______||______| |______|   |___|
+`
+
 export function BootLoader({ onLoadingComplete }: BootLoaderProps) {
-  const [selectedOption, setSelectedOption] = useState(0)
-  const [bootStage, setBootStage] = useState<'menu' | 'booting'>('menu')
-  const [bootProgress, setBootProgress] = useState(0)
-
-  const bootOptions = [
-    'FreedOS GNU/Linux',
-    'FreedOS GNU/Linux (Recovery Mode)',
-    'Memory Test (memtest86+)',
-    'Memory Test (memtest86+, serial console)',
-  ]
-
-  const bootMessages = [
-    'Loading FreedOS kernel...',
-    'Initializing ramdisk...',
-    'Mounting root filesystem...',
-    'Checking for system integrity...',
-    'Starting FreedOS...',
-  ]
+  const [currentStep, setCurrentStep] = useState(0)
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (bootStage === 'menu') {
-        if (e.key === 'ArrowUp') {
-          setSelectedOption((prev) => (prev > 0 ? prev - 1 : bootOptions.length - 1))
-        } else if (e.key === 'ArrowDown') {
-          setSelectedOption((prev) => (prev < bootOptions.length - 1 ? prev + 1 : 0))
-        } else if (e.key === 'Enter') {
-          setBootStage('booting')
+    const timer = setInterval(() => {
+      setCurrentStep((prev) => {
+        if (prev < bootSequence.length - 1) {
+          return prev + 1
+        } else {
+          clearInterval(timer)
+          setTimeout(onLoadingComplete, 1000) // Delay before completing
+          return prev
         }
-      }
-    }
+      })
+    }, 1000)
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [bootStage, bootOptions.length])
-
-  useEffect(() => {
-    if (bootStage === 'booting') {
-      const interval = setInterval(() => {
-        setBootProgress((prev) => {
-          if (prev < bootMessages.length - 1) {
-            return prev + 1
-          } else {
-            clearInterval(interval)
-            setTimeout(onLoadingComplete, 1000)
-            return prev
-          }
-        })
-      }, 1000)
-
-      return () => clearInterval(interval)
-    }
-  }, [bootStage, onLoadingComplete])
+    return () => clearInterval(timer)
+  }, [onLoadingComplete])
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black text-green-500 font-mono p-4 flex flex-col"
-    >
-      <div className="mb-4">
-        <h1 className="text-2xl font-bold">FreedOS GRUB Bootloader</h1>
-        <p>Version 2.04</p>
+    <div className="fixed inset-0 bg-black flex flex-col items-center justify-center text-emerald-400 font-mono">
+      <motion.pre
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="text-xs sm:text-sm md:text-base lg:text-lg mb-8"
+      >
+        {asciiArt}
+      </motion.pre>
+      <div className="w-64 sm:w-80 md:w-96">
+        {bootSequence.map((step, index) => (
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: index <= currentStep ? 1 : 0, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-2"
+          >
+            {step}
+          </motion.div>
+        ))}
       </div>
-      {bootStage === 'menu' ? (
-        <>
-          <div className="flex-grow">
-            {bootOptions.map((option, index) => (
-              <div
-                key={index}
-                className={`py-1 ${index === selectedOption ? 'bg-green-500 text-black' : ''}`}
-              >
-                {option}
-              </div>
-            ))}
-          </div>
-          <div className="mt-auto">
-            <p>Use the ↑ and ↓ keys to select which entry is highlighted.</p>
-            <p>Press enter to boot the selected OS, 'e' to edit the commands</p>
-            <p>before booting or 'c' for a command-line.</p>
-          </div>
-        </>
-      ) : (
-        <div className="flex-grow">
-          {bootMessages.slice(0, bootProgress + 1).map((message, index) => (
-            <div key={index} className="py-1">
-              {message}
-            </div>
-          ))}
-        </div>
-      )}
-    </motion.div>
+      <motion.div
+        initial={{ width: 0 }}
+        animate={{ width: `${((currentStep + 1) / bootSequence.length) * 100}%` }}
+        className="h-2 bg-emerald-400 mt-4 rounded-full"
+        style={{ width: 256 }}
+      />
+    </div>
   )
 }
-

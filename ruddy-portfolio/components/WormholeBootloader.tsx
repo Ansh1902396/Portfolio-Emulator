@@ -1,104 +1,64 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
-interface BootLoaderProps {
-  onLoadingComplete: () => void
-}
+export function WormholeBootloader() {
+  const [visibleLines, setVisibleLines] = useState<string[]>([])
 
-export function WormholeBootloader({ onLoadingComplete }: BootLoaderProps) {
-  const [selectedOption, setSelectedOption] = useState(0)
-  const [bootStage, setBootStage] = useState<'menu' | 'booting'>('menu')
-  const [bootProgress, setBootProgress] = useState(0)
-
-  const bootOptions = [
-    'FreedOS GNU/Linux',
-    'FreedOS GNU/Linux (Recovery Mode)',
-    'Memory Test (memtest86+)',
-    'Memory Test (memtest86+, serial console)',
-  ]
-
-  const bootMessages = [
-    'Loading FreedOS kernel...',
-    'Initializing ramdisk...',
-    'Mounting root filesystem...',
-    'Checking for system integrity...',
-    'Starting FreedOS...',
+  // Lines to simulate a GRUB bootloader screen
+  const bootMenuLines = [
+    'GNU GRUB  version 2.06',
+    '',
+    ' +-------------------------------------+',
+    ' |   NeoSec Terminal (default)         |',
+    ' |   Advanced options for NeoSec       |',
+    ' |   Memory test (memtest86+)          |',
+    ' +-------------------------------------+',
+    'Use ↑ and ↓ keys to navigate, Enter to boot.',
+    'Press e to edit commands before booting.'
   ]
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (bootStage === 'menu') {
-        if (e.key === 'ArrowUp') {
-          setSelectedOption((prev) => (prev > 0 ? prev - 1 : bootOptions.length - 1))
-        } else if (e.key === 'ArrowDown') {
-          setSelectedOption((prev) => (prev < bootOptions.length - 1 ? prev + 1 : 0))
-        } else if (e.key === 'Enter') {
-          setBootStage('booting')
-        }
+    // Reveal each line in sequence with a slight delay
+    let lineIndex = 0
+    const intervalId = setInterval(() => {
+      if (lineIndex < bootMenuLines.length) {
+        setVisibleLines(prev => [...prev, bootMenuLines[lineIndex]])
+        lineIndex++
+      } else {
+        clearInterval(intervalId)
       }
-    }
+    }, 700) // Adjust to change how quickly lines appear
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [bootStage, bootOptions.length])
-
-  useEffect(() => {
-    if (bootStage === 'booting') {
-      const interval = setInterval(() => {
-        setBootProgress((prev) => {
-          if (prev < bootMessages.length - 1) {
-            return prev + 1
-          } else {
-            clearInterval(interval)
-            setTimeout(onLoadingComplete, 1000)
-            return prev
-          }
-        })
-      }, 1000)
-
-      return () => clearInterval(interval)
-    }
-  }, [bootStage, onLoadingComplete])
+    return () => clearInterval(intervalId)
+  }, [])
 
   return (
     <motion.div
+      className="fixed inset-0 bg-black text-green-500 font-mono"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black text-green-500 font-mono p-4 flex flex-col"
     >
-      <div className="mb-4">
-        <h1 className="text-2xl font-bold">FreedOS GRUB Bootloader</h1>
-        <p>Version 2.04</p>
+      {/* GRUB-like menu text */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2">
+        {visibleLines.map((line, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="text-center text-lg"
+            style={{ whiteSpace: 'pre' }}
+          >
+            {line}
+          </motion.div>
+        ))}
       </div>
-      {bootStage === 'menu' ? (
-        <>
-          <div className="flex-grow">
-            {bootOptions.map((option, index) => (
-              <div
-                key={index}
-                className={`py-1 ${index === selectedOption ? 'bg-green-500 text-black' : ''}`}
-              >
-                {option}
-              </div>
-            ))}
-          </div>
-          <div className="mt-auto">
-            <p>Use the ↑ and ↓ keys to select which entry is highlighted.</p>
-            <p>Press enter to boot the selected OS, 'e' to edit the commands</p>
-            <p>before booting or 'c' for a command-line.</p>
-          </div>
-        </>
-      ) : (
-        <div className="flex-grow">
-          {bootMessages.slice(0, bootProgress + 1).map((message, index) => (
-            <div key={index} className="py-1">
-              {message}
-            </div>
-          ))}
-        </div>
-      )}
+
+      {/* “Loading” or status message at the bottom */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-green-500 text-sm font-bold">
+        Loading bootloader components...
+      </div>
     </motion.div>
   )
 }
-
