@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Github, Linkedin, Twitter, GamepadIcon, ChevronLeft, ChevronRight } from 'lucide-react'
+import { X, Github, Linkedin, Twitter, Terminal, ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface Project {
   name: string
@@ -27,16 +27,20 @@ interface AppDrawerProps {
 export function AppDrawer({ projects, socialApps, onOpenApp, onClose, isDarkMode, onOpenGame }: AppDrawerProps) {
   const [currentPage, setCurrentPage] = useState(0)
   const appsPerPage = 8
-  const allApps = [...projects, ...socialApps, {
-    name: "Matrix Hacking Simulator",
-    icon: (
-      <div className="w-16 h-16 bg-green-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
-        <GamepadIcon size={32} className="text-white" />
-      </div>
-    ),
-    description: "A challenging game to test your decoding and hacking skills in the Matrix.",
-    technologies: ["React", "TypeScript", "Framer Motion"]
-  }]
+  const allApps = [
+    ...projects,
+    ...socialApps,
+    {
+      name: "Matrix Game",
+      icon: (
+        <div className="w-16 h-16 bg-green-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
+          <Terminal size={32} className="text-white" />
+        </div>
+      ),
+      description: "Enter the Matrix and uncover the truth",
+      technologies: ["React", "TypeScript", "Framer Motion"]
+    }
+  ]
   const totalPages = Math.ceil(allApps.length / appsPerPage)
 
   const startIndex = currentPage * appsPerPage
@@ -86,21 +90,21 @@ export function AppDrawer({ projects, socialApps, onOpenApp, onClose, isDarkMode
         <div className="space-y-12">
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {currentApps.map((item) => (
-              <AppIcon 
-                key={item.name} 
-                name={item.name} 
-                icon={item.icon} 
+              <AppIcon
+                key={item.name}
+                name={item.name}
+                icon={item.icon}
                 onClick={() => {
                   if ('url' in item) {
                     window.open(item.url, '_blank')
-                  } else if (item.name === "Matrix Hacking Simulator") {
+                  } else if (item.name === "Matrix Game") {
                     onOpenGame()
                   } else {
                     onOpenApp(item.name)
                   }
                   onClose()
                 }}
-                isDarkMode={isDarkMode} 
+                isDarkMode={isDarkMode}
               />
             ))}
           </div>

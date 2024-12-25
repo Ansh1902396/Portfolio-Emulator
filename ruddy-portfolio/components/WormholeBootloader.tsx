@@ -5,7 +5,7 @@ interface BootLoaderProps {
   onLoadingComplete: () => void
 }
 
-export function BootLoader({ onLoadingComplete }: BootLoaderProps) {
+export function WormholeBootloader({ onLoadingComplete }: BootLoaderProps) {
   const [selectedOption, setSelectedOption] = useState(0)
   const [bootStage, setBootStage] = useState<'menu' | 'booting'>('menu')
   const [bootProgress, setBootProgress] = useState(0)

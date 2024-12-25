@@ -3,66 +3,52 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Dock } from './Dock'
 import { AppDrawer } from './AppDrawer'
 import { ProjectApp } from './ProjectApp'
+import { IframeModal } from './IframeModal'
 import { InfoModal } from './InfoModal'
 import { InstructionsModal } from './InstructionsModal'
-import { MatrixHackingSimulator } from './MatrixHackingSimulator'
 import { ContextMenu } from './ContextMenu'
 import { Clock } from './Clock'
 import { CustomCursor } from './CustomCursor'
 import { Project, SocialApp } from '../types/app-types'
+import { MatrixGameMode } from './MatrixGameMode'
 
 const projects: Project[] = [
   {
     name: "Augmentium",
     description: "A decentralized stablecoin pegged to gold using CosmWasm smart contracts.",
     technologies: ["CosmWasm", "Rust", "Cosmos SDK"],
-    icon: <div className="w-16 h-16 bg-yellow-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl font-bold">Au</div>,
-    github: "https://github.com/Ansh1902396/Augmentium"
+    icon: <div className="w-16 h-16 bg-yellow-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl font-bold">Au</div>
   },
   {
     name: "On-Chain-Data-Encryption",
     description: "Encryption framework using ChaCha20-Poly1305 within Artela Blockchain smart contracts.",
     technologies: ["Solidity", "ChaCha20-Poly1305", "Artela Blockchain"],
-    icon: <div className="w-16 h-16 bg-purple-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">🔒</div>,
-    github: "https://github.com/Ansh1902396/On-Chain-Data-Encryption"
+    icon: <div className="w-16 h-16 bg-purple-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">🔒</div>
   },
   {
     name: "AE-Forge",
     description: "Low-code platform for Sophia smart contract creation with LLM-based guidance.",
     technologies: ["TypeScript", "React", "Web3Auth"],
-    icon: <div className="w-16 h-16 bg-blue-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">⚒️</div>,
-    github: "https://github.com/Ansh1902396/AE-forge"
+    icon: <div className="w-16 h-16 bg-blue-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">⚒️</div>
   },
   {
     name: "KageGroove",
     description: "A memory-efficient music player in Rust with SDL.",
     technologies: ["Rust", "SDL"],
-    icon: <div className="w-16 h-16 bg-pink-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">🎵</div>,
-    github: "https://github.com/Ansh1902396/KageGroove"
+    icon: <div className="w-16 h-16 bg-pink-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">🎵</div>
   },
   {
     name: "Drona-AI",
     description: "AI-Powered Personalized Education Platform inspired by Dronacharya's teachings.",
     technologies: ["Next.js 13", "OpenAI API", "Tailwind CSS"],
-    icon: <div className="w-16 h-16 bg-green-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">🧠</div>,
-    github: "https://github.com/Ansh1902396/Drona"
+    icon: <div className="w-16 h-16 bg-green-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">🧠</div>
   },
   {
-    name: "Matrix Hacking Simulator",
+    name: "Matrix Game",
     description: "A challenging game to test your decoding and hacking skills in the Matrix.",
     technologies: ["React", "TypeScript", "Framer Motion"],
-    icon: <div className="w-16 h-16 bg-green-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">🕵️</div>,
-    github: "https://github.com/Ansh1902396/matrix-terminal-portfolio"
-  },
-  {
-    name: "Terminal",
-    description: "Access the command-line interface",
-    technologies: ["React", "TypeScript"],
-    icon: <div className="w-16 h-16 bg-black border-4 border-green-500 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-    </div>,
-    github: "https://github.com/Ansh1902396/matrix-terminal-portfolio"
-  },
+    icon: <div className="w-16 h-16 bg-green-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">🕵️</div>
+  }
 ]
 
 const socialApps: SocialApp[] = [
@@ -110,50 +96,53 @@ interface OSDesktopProps {
 export function OSDesktop({ onSwitchToTerminal }: OSDesktopProps) {
   const [openApp, setOpenApp] = useState<string | null>(null)
   const [isAppDrawerOpen, setIsAppDrawerOpen] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(true) 
+  const [isDarkMode, setIsDarkMode] = useState(true)
   const [dockItems, setDockItems] = useState([...projects, ...socialApps])
+  const [iframeModal, setIframeModal] = useState<{ isOpen: boolean; url: string; title: string }>({
+    isOpen: false,
+    url: '',
+    title: ''
+  })
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isInstructionsModalOpen, setIsInstructionsModalOpen] = useState(false)
-  const [isGameOpen, setIsGameOpen] = useState(false)
+  const [isMatrixGameMode, setIsMatrixGameMode] = useState(false)
 
   const toggleAppDrawer = () => setIsAppDrawerOpen(!isAppDrawerOpen)
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode)
   const toggleInfoModal = () => setIsInfoModalOpen(!isInfoModalOpen)
   const toggleInstructionsModal = () => setIsInstructionsModalOpen(!isInstructionsModalOpen)
-  const toggleGame = () => setIsGameOpen(!isGameOpen)
+  const toggleMatrixGameMode = () => setIsMatrixGameMode(!isMatrixGameMode)
 
   const handleRemoveFromDock = (appName: string) => {
     setDockItems(dockItems.filter(item => item.name !== appName))
   }
 
   const handleOpenLink = (url: string, title: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    setIframeModal({ isOpen: true, url, title })
   }
 
   const handleOpenApp = (appName: string) => {
-    if (appName === "Matrix Hacking Simulator") {
-      setIsGameOpen(true);
-    } else if (appName === "Terminal") {
-      onSwitchToTerminal();
+    if (appName === "Matrix Game") {
+      setIsMatrixGameMode(true)
     } else {
-      setOpenApp(appName);
+      setOpenApp(appName)
     }
   }
 
   return (
-    <div className={`h-screen w-full overflow-hidden ${isDarkMode ? 'bg-gray-900' : 'bg-gray-800'} transition-colors duration-300`}> 
+    <div className={`h-screen w-full overflow-hidden ${isDarkMode ? 'bg-gray-900' : 'bg-gray-800'} transition-colors duration-300`}>
       <CustomCursor isDarkMode={isDarkMode} />
       <div className="absolute inset-0 z-0">
-        <img 
-          src="https://wallpapercave.com/wp/wp9324707.jpg" 
-          alt="background" 
+        <img
+          src="https://wallpapercave.com/wp/wp9324707.jpg"
+          alt="background"
           className="w-full h-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60" />
       </div>
-      
+
       <div className="relative z-10">
-        <motion.div 
+        <motion.div
           className={`absolute top-4 left-4 right-4 h-16 ${
             isDarkMode ? 'bg-gray-800' : 'bg-white'
           } border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between px-6`}
@@ -178,20 +167,20 @@ export function OSDesktop({ onSwitchToTerminal }: OSDesktopProps) {
               onSwitchToTerminal={onSwitchToTerminal}
               onOpenInfo={toggleInfoModal}
               onOpenInstructions={toggleInstructionsModal}
-              onOpenGame={toggleGame}
+              onOpenGame={toggleMatrixGameMode}
             />
           </div>
         </motion.div>
         <AnimatePresence>
           {isAppDrawerOpen && (
             <div className="relative z-10 flex items-center justify-center min-h-screen">
-              <AppDrawer 
-                projects={projects} 
+              <AppDrawer
+                projects={projects}
                 socialApps={socialApps}
-                onOpenApp={handleOpenApp} 
-                onClose={toggleAppDrawer} 
-                isDarkMode={isDarkMode} 
-                onOpenGame={toggleGame}
+                onOpenApp={handleOpenApp}
+                onClose={toggleAppDrawer}
+                isDarkMode={isDarkMode}
+                onOpenGame={toggleMatrixGameMode}
               />
             </div>
           )}
@@ -205,13 +194,19 @@ export function OSDesktop({ onSwitchToTerminal }: OSDesktopProps) {
             />
           )}
         </AnimatePresence>
-        <Dock 
-          projects={dockItems.filter(item => 'technologies' in item)} 
-          socialApps={dockItems.filter(item => 'url' in item)} 
-          onOpenApp={handleOpenApp} 
+        <Dock
+          projects={dockItems.filter(item => 'technologies' in item)}
+          socialApps={dockItems.filter(item => 'url' in item)}
+          onOpenApp={handleOpenApp}
           onOpenLink={handleOpenLink}
-          isDarkMode={isDarkMode} 
+          isDarkMode={isDarkMode}
           onRemoveFromDock={handleRemoveFromDock}
+        />
+        <IframeModal
+          isOpen={iframeModal.isOpen}
+          onClose={() => setIframeModal({ ...iframeModal, isOpen: false })}
+          url={iframeModal.url}
+          title={iframeModal.title}
         />
         <InfoModal
           isOpen={isInfoModalOpen}
@@ -224,27 +219,12 @@ export function OSDesktop({ onSwitchToTerminal }: OSDesktopProps) {
           isDarkMode={isDarkMode}
         />
         <AnimatePresence>
-          {isGameOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
-            >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                className="w-full max-w-2xl"
-              >
-                <MatrixHackingSimulator
-                  onClose={() => setIsGameOpen(false)}
-                />
-              </motion.div>
-            </motion.div>
+          {isMatrixGameMode && (
+            <MatrixGameMode onExit={() => setIsMatrixGameMode(false)} />
           )}
         </AnimatePresence>
       </div>
     </div>
   )
 }
+
