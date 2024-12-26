@@ -11,6 +11,7 @@ import { Clock } from './Clock'
 import { CustomCursor } from './CustomCursor'
 import { Project, SocialApp } from '../types/app-types'
 import { MatrixGameMode } from './MatrixGameMode'
+import { Terminal } from 'lucide-react'
 
 const projects: Project[] = [
   {
@@ -44,10 +45,12 @@ const projects: Project[] = [
     icon: <div className="w-16 h-16 bg-green-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">🧠</div>
   },
   {
-    name: "Matrix Game",
+    name: "Freed Kernel",
     description: "A challenging game to test your decoding and hacking skills in the Matrix.",
     technologies: ["React", "TypeScript", "Framer Motion"],
-    icon: <div className="w-16 h-16 bg-green-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center text-2xl">🕵️</div>
+    icon: <div className="w-16 h-16 bg-green-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
+      <Terminal size={32} className="text-black" />
+    </div>
   }
 ]
 
@@ -122,7 +125,7 @@ export function OSDesktop({ onSwitchToTerminal }: OSDesktopProps) {
   }
 
   const handleOpenApp = (appName: string) => {
-    if (appName === "Matrix Game") {
+    if (appName === "Freed Kernel") {
       setIsMatrixGameMode(true)
     } else {
       setOpenApp(appName)

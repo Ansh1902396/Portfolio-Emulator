@@ -44,7 +44,7 @@ export function BootLoader({ onLoadingComplete }: BootLoaderProps) {
   }, [onLoadingComplete])
 
   return (
-    <div className="fixed inset-0 bg-black flex flex-col items-center justify-center text-emerald-400 font-mono">
+    <div className="fixed inset-0 bg-black flex flex-col items-center justify-center text-emerald-400 font-mono"> {/* Updated background */}
       <motion.pre
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -75,3 +75,4 @@ export function BootLoader({ onLoadingComplete }: BootLoaderProps) {
     </div>
   )
 }
+

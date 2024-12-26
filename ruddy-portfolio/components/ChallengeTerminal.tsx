@@ -25,7 +25,7 @@ export function ChallengeTerminal({ title, description, hint, onSubmit, onClose 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"
     >
       <div className="w-full max-w-4xl max-h-[80vh] bg-black border border-emerald-400 rounded-lg shadow-lg overflow-hidden flex flex-col">
         {/* Terminal Header */}

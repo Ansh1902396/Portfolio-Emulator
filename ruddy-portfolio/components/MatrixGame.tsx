@@ -1,8 +1,17 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Shield, Sword, Brain, Signal, Heart, Cpu } from 'lucide-react'
+import { 
+  Shield, 
+  Sword, 
+  Brain, 
+  Signal, 
+  Heart, 
+  Cpu, 
+  Eye, 
+  User 
+} from 'lucide-react'
 import { ChallengeTerminal } from './ChallengeTerminal'
 
 interface GameState {
@@ -42,6 +51,7 @@ export function MatrixGame({
 }: GameProps) {
   const [currentChallenge, setCurrentChallenge] = useState<{ name: string; description: string; hint: string } | null>(null);
 
+  // 1) LOCATION-BASED COLOR STYLING
   const getLocationColor = () => {
     switch (gameState.location) {
       case 'construct':
@@ -50,6 +60,8 @@ export function MatrixGame({
         return 'text-yellow-400'
       case 'matrix':
         return 'text-green-400'
+      case 'oracleTemple':
+        return 'text-pink-400'         // New color for Oracle Temple
       case 'zion':
         return 'text-red-400'
       case 'machineCity':
@@ -59,6 +71,7 @@ export function MatrixGame({
     }
   }
 
+  // 2) LOCATION-BASED ICONS
   const getLocationIcon = () => {
     switch (gameState.location) {
       case 'construct':
@@ -67,12 +80,14 @@ export function MatrixGame({
         return <Sword className="w-5 h-5" />
       case 'matrix':
         return <Brain className="w-5 h-5" />
+      case 'oracleTemple':
+        return <Eye className="w-5 h-5" />     // New icon for Oracle Temple
       case 'zion':
         return <Shield className="w-5 h-5" />
       case 'machineCity':
         return <Cpu className="w-5 h-5" />
       default:
-        return null
+        return <User className="w-5 h-5" />
     }
   }
 
@@ -86,6 +101,73 @@ export function MatrixGame({
     openModal(content);
   }
 
+  // 3) RENDER LOCATION-SPECIFIC COMMAND HINTS
+  const renderLocationCommands = () => {
+    switch (gameState.location) {
+      case 'construct':
+        return (
+          <ul className="ml-4 mt-1 space-y-1 list-disc list-inside">
+            <li><span className="text-emerald-300">take red pill</span> - Embrace the truth</li>
+            <li><span className="text-emerald-300">take blue pill</span> - Return to comfortable ignorance</li>
+            <li><span className="text-emerald-300">talk to morpheus</span> - Gain insight</li>
+            <li><span className="text-emerald-300">examine pills</span> - Inspect the pills closely</li>
+          </ul>
+        )
+      case 'training':
+        return (
+          <ul className="ml-4 mt-1 space-y-1 list-disc list-inside">
+            <li><span className="text-emerald-300">train combat</span></li>
+            <li><span className="text-emerald-300">practice dodge</span></li>
+            <li><span className="text-emerald-300">learn techniques</span></li>
+            <li><span className="text-emerald-300">spar</span></li>
+            <li><span className="text-emerald-300">meditate</span> - Possibly reach the Matrix!</li>
+          </ul>
+        )
+      case 'matrix':
+        return (
+          <ul className="ml-4 mt-1 space-y-1 list-disc list-inside">
+            <li><span className="text-emerald-300">hack terminal</span> - Attempt to hack for a challenge</li>
+            <li><span className="text-emerald-300">solve challenge</span> - View or solve the current puzzle</li>
+            <li><span className="text-emerald-300">enter oracle's temple</span> - Seek deeper truths (requires awareness)</li>
+            <li><span className="text-emerald-300">dodge bullet</span></li>
+            <li><span className="text-emerald-300">find phone</span></li>
+            <li><span className="text-emerald-300">fight agent</span></li>
+            <li><span className="text-emerald-300">analyze code</span></li>
+          </ul>
+        )
+      case 'oracleTemple':
+        return (
+          <ul className="ml-4 mt-1 space-y-1 list-disc list-inside">
+            <li><span className="text-emerald-300">talk to oracle</span> - Gain cryptic wisdom</li>
+            <li><span className="text-emerald-300">offer cookies</span> - Show kindness (if you have them!)</li>
+            <li><span className="text-emerald-300">ask question</span> - Learn about your destiny</li>
+            <li><span className="text-emerald-300">decipher symbols</span> - Study the temple walls</li>
+          </ul>
+        )
+      case 'zion':
+        return (
+          <ul className="ml-4 mt-1 space-y-1 list-disc list-inside">
+            <li><span className="text-emerald-300">train skills</span></li>
+            <li><span className="text-emerald-300">meet morpheus</span></li>
+            <li><span className="text-emerald-300">defend zion</span></li>
+            <li><span className="text-emerald-300">rally humans</span></li>
+            <li><span className="text-emerald-300">upgrade weapons</span></li>
+          </ul>
+        )
+      case 'machineCity':
+        return (
+          <ul className="ml-4 mt-1 space-y-1 list-disc list-inside">
+            <li><span className="text-emerald-300">negotiate</span> - Attempt peace</li>
+            <li><span className="text-emerald-300">fight</span> - Engage the central AI in combat</li>
+            <li><span className="text-emerald-300">sacrifice</span> - A bittersweet end</li>
+            <li><span className="text-emerald-300">return</span> - Back to Zion</li>
+          </ul>
+        )
+      default:
+        return null
+    }
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -94,6 +176,7 @@ export function MatrixGame({
       className="relative"
     >
       <div className="grid grid-cols-2 gap-4">
+        {/* LEFT PANEL: Status Bars & Inventory */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -101,12 +184,15 @@ export function MatrixGame({
           className="mb-4 bg-black/80 p-4 rounded-lg border border-emerald-400 shadow-lg shadow-emerald-400/20"
         >
           <div className="flex flex-col gap-3">
+            {/* LOCATION */}
             <div className="flex items-center gap-2">
               {getLocationIcon()}
               <span className={`font-bold ${getLocationColor()}`}>
                 Location: {gameState.location.charAt(0).toUpperCase() + gameState.location.slice(1)}
               </span>
             </div>
+
+            {/* HEALTH BAR */}
             <div className="flex items-center gap-2">
               <Heart className="w-5 h-5 text-red-400" />
               <div className="flex-1 h-2 bg-gray-700 rounded-full overflow-hidden">
@@ -119,6 +205,8 @@ export function MatrixGame({
               </div>
               <span className="text-sm text-red-400">{gameState.health}%</span>
             </div>
+
+            {/* AWARENESS BAR */}
             <div className="flex items-center gap-2">
               <Brain className="w-5 h-5 text-blue-400" />
               <div className="flex-1 h-2 bg-gray-700 rounded-full overflow-hidden">
@@ -131,6 +219,8 @@ export function MatrixGame({
               </div>
               <span className="text-sm text-blue-400">{gameState.awareness}%</span>
             </div>
+
+            {/* INVENTORY */}
             <div className="flex items-center gap-2">
               <span className="text-emerald-400">Inventory:</span>
               <span className="text-sm text-emerald-300">
@@ -142,6 +232,7 @@ export function MatrixGame({
           </div>
         </motion.div>
 
+        {/* RIGHT PANEL: Active Challenge */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -160,45 +251,37 @@ export function MatrixGame({
               </button>
             </>
           ) : (
-            <p className="text-emerald-300">No active challenge. Hack a terminal to begin.</p>
+            <p className="text-emerald-300">No active challenge. <strong>hack terminal</strong> to begin.</p>
           )}
         </motion.div>
       </div>
 
+      {/* LOCATION-SPECIFIC COMMANDS */}
       <div className="game-commands mt-4 mb-2">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-sm text-emerald-300"
         >
-          Available commands:
-          <ul className="ml-4 mt-1 space-y-1">
-            <li>• look - Examine your surroundings</li>
-            <li>• inventory - Check your items</li>
-            <li>• status - Check your health and awareness levels</li>
-            <li>• help - Show available commands</li>
-            <li>• exit - Leave the game</li>
-            {gameState.location === 'matrix' && (
-              <>
-                <li>• hack terminal - Attempt to hack a nearby terminal</li>
-                <li>• solve challenge - View and solve the current challenge</li>
-              </>
-            )}
-            {gameState.location === 'machineCity' && (
-              <>
-                <li>• negotiate - Attempt to negotiate with the machines</li>
-                <li>• fight - Engage in battle with the machines</li>
-                <li>• sacrifice - Choose to sacrifice yourself</li>
-                <li>• return - Return to Zion</li>
-              </>
-            )}
-          </ul>
+          <p className="mb-1">Location-specific commands:</p>
+          {renderLocationCommands()}
+          <div className="mt-2">
+            <p>Universal commands:</p>
+            <ul className="ml-4 mt-1 space-y-1 list-disc list-inside">
+              <li><span className="text-emerald-300">look</span> - Examine surroundings</li>
+              <li><span className="text-emerald-300">inventory</span> - Check your items</li>
+              <li><span className="text-emerald-300">status</span> - Check health &amp; awareness</li>
+              <li><span className="text-emerald-300">help</span> - Show commands</li>
+              <li><span className="text-emerald-300">exit</span> - Leave the simulation</li>
+            </ul>
+          </div>
         </motion.div>
       </div>
 
+      {/* CHALLENGE MODAL */}
       {isModalOpen && challengeState.currentChallenge && (
         <ChallengeTerminal
-          title={challengeState.currentChallenge}
+          title={modalContent?.title || "Challenge"}
           description={modalContent?.description || "Solve the challenge to progress in the game."}
           hint={modalContent?.hint || "Use your hacking skills to overcome this obstacle."}
           onSubmit={handleSubmitSolution}

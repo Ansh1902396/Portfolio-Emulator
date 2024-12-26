@@ -1,11 +1,14 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from 'react'
+import { motion } from 'framer-motion'
 
 interface EndGameModalProps {
-  onRestart: () => void;
-  onExit: () => void;
+  onRestart: () => void
+  onExit: () => void
 }
 
+/**
+ * Displays a "Game Over" screen once Freed OS is done.
+ */
 const EndGameModal: React.FC<EndGameModalProps> = ({ onRestart, onExit }) => {
   return (
     <motion.div
@@ -22,14 +25,13 @@ const EndGameModal: React.FC<EndGameModalProps> = ({ onRestart, onExit }) => {
       >
         <h2 className="text-3xl font-bold mb-4">Congratulations, Neo!</h2>
         <p className="mb-4">
-          You've successfully completed Freed OS: A Terminal Awakening. The system is rebooting, and all minds are being freed from the illusion.
+          You've successfully completed Freed OS: A Terminal Awakening. 
+          The system is rebooting, and illusions are unraveling.
         </p>
         <p className="mb-4">
-          Your journey has led to the liberation of countless individuals trapped within the Matrix. The world as you knew it will never be the same.
+          Your choices shaped Freed OS reality. The world won't be the same.
         </p>
-        <p className="mb-8">
-          Remember: There is no spoon.
-        </p>
+        <p className="mb-8">Remember: There is no spoon.</p>
         <div className="flex justify-center space-x-4">
           <button
             onClick={onRestart}
@@ -46,8 +48,13 @@ const EndGameModal: React.FC<EndGameModalProps> = ({ onRestart, onExit }) => {
         </div>
       </motion.div>
     </motion.div>
-  );
-};
+  )
+}
 
-export default EndGameModal;
+export default EndGameModal
+
+/* 
+  CSS: same as your existing .retro-crt, .retro-scanlines, .retro-text 
+  references. 
+*/
 

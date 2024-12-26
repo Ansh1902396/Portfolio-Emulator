@@ -14,6 +14,8 @@ import { Input } from "./ui/input"
 import { VimModal } from './VimModal'
 import { GUIMode } from './GUIMode'
 import { BootLoader } from './BootLoader'
+import { FreedOSBootloader } from './FreedOSBootloader'
+import { MatrixGameMode } from './MatrixGameMode'
 
 // Dynamically import VimModal with no SSR
 const VimModalDynamic = dynamic(() => import('./VimModal').then(mod => ({ default: mod.VimModal })), { 
@@ -47,6 +49,8 @@ function Terminal() {
   const [files, setFiles] = useState<Record<string, string>>({})
   const [isGUIMode, setIsGUIMode] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isFreedOSMode, setIsFreedOSMode] = useState(false)
+  const [previousMode, setPreviousMode] = useState<'gui' | 'terminal'>('terminal');
   const { 
     executeCommand, 
     getCurrentPath, 
@@ -126,6 +130,12 @@ function Terminal() {
     const [cmd, ...args] = command.split(' ')
     let output: string | JSX.Element | Promise<string>
 
+    const result = executeCommand(command)
+    if (result === 'ENTER_FREED_OS') {
+      setIsFreedOSMode(true)
+      return
+    }
+
     if (cmd.toLowerCase() === 'vim') {
       const fileName = args[0] || 'untitled.txt'
       setCurrentFileName(fileName)
@@ -135,8 +145,9 @@ function Terminal() {
     }
 
     if (cmd.toLowerCase() === 'gui') {
-      setIsLoading(true)
-      return
+      setIsLoading(true);
+      setPreviousMode('terminal');
+      return;
     }
 
     if (isGameActive) {
@@ -260,92 +271,108 @@ function Terminal() {
       ref={terminalRef}
       className="relative w-full h-screen overflow-auto bg-black text-emerald-400 font-mono"
     >
-      <AnimatePresence>
-        {isLoading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="fixed inset-0 z-50"
-          >
-            <BootLoader onLoadingComplete={() => {
-              setIsLoading(false)
-              setIsGUIMode(true)
-            }} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-      {isGUIMode ? (
-        <GUIMode onSwitchToTerminal={() => {
-          setIsLoading(true)
-          setTimeout(() => {
-            setIsGUIMode(false)
-            setIsLoading(false)
-          }, 3000)
+      {isFreedOSMode && (
+        <MatrixGameMode onExit={(prevMode) => {
+          setIsFreedOSMode(false);
+          if (prevMode === 'gui') {
+            setIsLoading(true);
+            setTimeout(() => {
+              setIsLoading(false);
+              setIsGUIMode(true);
+            }, 3000);
+          }
         }} />
-      ) : (
+      )}
+      {!isFreedOSMode && (
         <>
-          <MatrixBackground />
-          <div className="relative z-10 p-4 min-h-full flex flex-col">
-            {asciiArt && (
-              <pre className="text-emerald-400 whitespace-pre text-center mb-4 animate-fadeIn font-mono text-sm sm:text-base md:text-lg lg:text-xl animate-subtle-glow">
-                {asciiArt}
-              </pre>
+          <AnimatePresence>
+            {isLoading && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="fixed inset-0 z-50"
+              >
+                <BootLoader onLoadingComplete={() => {
+                  setIsLoading(false)
+                  setIsGUIMode(true)
+                }} />
+              </motion.div>
             )}
-            {welcomeMessage && <WelcomeBox message={welcomeMessage} />}
-            <Output history={history} />
-            {isGameActive ? (
-              <>
-                <MatrixGame 
-                  gameState={gameState} 
-                  challengeState={challengeState}
-                  onCommand={handleCommand} 
-                  openModal={openModal}
-                  closeModal={closeModal}
-                  isModalOpen={isModalOpen}
-                  modalContent={modalContent}
-                  onSolveChallenge={handleSolveChallenge}
-                />
-                <CommandLine 
-                  onCommand={handleCommand}
-                  username="matrix"
-                  hostname={gameState.location}
-                  currentDirectory={currentDirectory}
-                  showCursor={true}
-                  isGameMode={true}
-                />
-              </>
-            ) : (
-              booted && (
-                <CommandLine 
-                  onCommand={handleCommand}
-                  username={username}
-                  hostname={hostname}
-                  currentDirectory={currentDirectory}
-                  showCursor={true}
-                  isGameMode={false}
-                />
-              )
-            )}
-          </div>
-          <TerminalModal
-            isOpen={isInfoModalOpen}
-            onClose={() => setIsInfoModalOpen(false)}
-            title={infoModalContent.title}
-            content={infoModalContent.content}
-          />
-          <VimModal
-            isOpen={isVimModalOpen}
-            onClose={() => setIsVimModalOpen(false)}
-            initialContent={vimContent}
-            onSave={(content) => {
-              setFilesFromHook(prev => ({ ...prev, [currentFileName]: content }))
-              handleFileOperation('write', currentFileName, content)
-              setIsVimModalOpen(false)
-            }}
-            fileName={currentFileName}
-          />
+          </AnimatePresence>
+          {isGUIMode ? (
+            <GUIMode onSwitchToTerminal={() => {
+              setIsLoading(true)
+              setTimeout(() => {
+                setIsGUIMode(false)
+                setIsLoading(false)
+              }, 3000)
+            }} />
+          ) : (
+            <>
+              <MatrixBackground />
+              <div className="relative z-10 p-4 min-h-full flex flex-col">
+                {asciiArt && (
+                  <pre className="text-emerald-400 whitespace-pre text-center mb-4 animate-fadeIn font-mono text-sm sm:text-base md:text-lg lg:text-xl animate-subtle-glow">
+                    {asciiArt}
+                  </pre>
+                )}
+                {welcomeMessage && <WelcomeBox message={welcomeMessage} />}
+                <Output history={history} />
+                {isGameActive ? (
+                  <>
+                    <MatrixGame 
+                      gameState={gameState} 
+                      challengeState={challengeState}
+                      onCommand={handleCommand} 
+                      openModal={openModal}
+                      closeModal={closeModal}
+                      isModalOpen={isModalOpen}
+                      modalContent={modalContent}
+                      onSolveChallenge={handleSolveChallenge}
+                    />
+                    <CommandLine 
+                      onCommand={handleCommand}
+                      username="matrix"
+                      hostname={gameState.location}
+                      currentDirectory={currentDirectory}
+                      showCursor={true}
+                      isGameMode={true}
+                    />
+                  </>
+                ) : (
+                  booted && (
+                    <CommandLine 
+                      onCommand={handleCommand}
+                      username={username}
+                      hostname={hostname}
+                      currentDirectory={currentDirectory}
+                      showCursor={true}
+                      isGameMode={false}
+                    />
+                  )
+                )}
+              </div>
+              <TerminalModal
+                isOpen={isInfoModalOpen}
+                onClose={() => setIsInfoModalOpen(false)}
+                title={infoModalContent.title}
+                content={infoModalContent.content}
+              />
+              <VimModal
+                isOpen={isVimModalOpen}
+                onClose={() => setIsVimModalOpen(false)}
+                initialContent={vimContent}
+                onSave={(content) => {
+                  setFilesFromHook(prev => ({ ...prev, [currentFileName]: content }))
+                  handleFileOperation('write', currentFileName, content)
+                  setIsVimModalOpen(false)
+                }}
+                fileName={currentFileName}
+              />
+            </>
+          )}
         </>
       )}
       <style jsx>{`

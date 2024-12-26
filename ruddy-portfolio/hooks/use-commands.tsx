@@ -58,7 +58,69 @@ export function useCommands() {
 
 10. Cool Commands: Using terminal-style commands to interact with the game world is a neat touch that fits the hacker aesthetic perfectly.
 
-Remember: The Matrix has you... Have fun and free your mind!`
+Remember: The Matrix has you... Have fun and free your mind!` , 
+
+    'resume.txt' : `Rudransh Shinghal
+rudransh9shinghal@gmail.com+91-6283-890-949§GitHubïLinkedInTwitter
+Education
+•LNM Institute of Information Technology, JaipurSept 2022 – May 2027
+–B.Tech-M.Tech in Electronics and Communications
+Skills
+•Languages:Rust, Solidity, Golang, TypeScript, JavaScript, Python, C/C++
+•Technologies:Geth, Ethers.js, viem, EVM, CosmWasm, GTK-rs, Cryptography, Distributed Systems, React.js,
+Node.js
+•Other Skills:Web3.js, Web3Auth, IPFS, Chainlink, Consensus Protocols
+Work Experience
+•Blockchain Developer, Deon LabsApril 2024 – Present
+–Spearheaded the development of Account Abstraction Solutions for Cosmos Chains using Rust, creating robust
+contracts for Entrypoint, Accounts, and Paymaster.
+–Designed and optimized smart contracts and relayers with sub-10ms latency for real-time data oracle integration
+across Cosmos and EVM chains.
+–Mentored 100+ developers globally, enhancing the adoption of Oraichain and modern blockchain methodolo-
+gies.
+•Full-Stack Engineer, FreelanceMay 2023 – Aug 2023
+–Delivered 10+ responsive decentralized applications (dApps) with seamless blockchain integration, leveraging
+Ethereum and Cosmos.
+–Enhanced  performance  by  30%  through  optimization  of  Web3.js/Ethers.js,  ensuring  efficient  gas  usage  and
+real-time data updates.
+–Collaborated with smart contract developers to create user-centric interfaces for DeFi apps, token swaps, and
+NFT platforms.
+Projects
+•Augmentium§GitHub
+–Built a decentralized stablecoin pegged to gold using CosmWasm smart contracts on the Cosmos ecosystem.
+–Achieved a 99.9% transaction success rate while reducing gas fees by 15%, enabling scalable and reliable DeFi
+solutions.
+–Enhanced token interoperability across blockchain networks, facilitating seamless trading with real-world as-
+sets.
+•On-Chain Data Encryption§GitHub
+–Engineered a cutting-edge encryption framework using ChaCha20-Poly1305 within Artela Blockchain smart
+contracts.
+–Improved data integrity and confidentiality for decentralized applications, ensuring 256-bit security for sensitive
+information.
+•AE Forge§GitHub
+–Developed a low-code platform for seamless Sophia smart contract creation, utilizing LLM-based guidance.
+–Integrated secure authentication via Web3Auth and enhanced the contract deployment pipeline.
+•KageGroove§GitHub
+–Created a memory-efficient music player in Rust with SDL, achieving playback latency of under 50ms.
+–Reduced memory usage by 20% compared to traditional music players, supporting MP3 formats effectively.
+Achievements
+•Mantra RWA Hackathon Winner:  Designed and deployed a gold-pegged stablecoin; secured 1st place among
+100+ teams.
+•Artela Use-Case Buildathon Winner:  Developed innovative encryption solutions; rewarded with USD 500.
+•Track Winner, LNMHacks 6.0:  Created AE Forge; secured top prizes across two tracks among 300+ projects.
+•Crack The Code 3.0 (1st Position):  Built HireSight, an LLM-powered interview preparation tool.
+•Crack The Code 4.0 (1st Position):  Developed Drona AI, a course assistance platform with advanced features.
+Research Articles
+•International Stablecoin Report
+–Analyzed decentralized collateral structures and their scalability potential within DeFi ecosystems.
+Extra Curricular Activities
+•Organizer, LNMHacks 6.0:  Secured USD 7,000 in sponsorships, driving blockchain innovation.` , 
+
+    'books&anime.txt' : `
+  1 . God Equation by Michio Kaku
+  2 . Bitcoin Programming
+  3 . 
+`
   })
   const [isVimActive, setIsVimActive] = useState(false)
   const [vimContent, setVimContent] = useState('')
@@ -84,7 +146,7 @@ Remember: The Matrix has you... Have fun and free your mind!`
   } | null>(null)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [infoModalContent, setInfoModalContent] = useState<{ title: string; content: React.ReactNode }>({ title: '', content: null })
-  const [isVimModalOpen, setIsVimModalOpen] = useState(false) // Added state for VimModal visibility
+  const [isVimModalOpen, setIsVimModalOpen] = useState(false) // For VimModal visibility
 
   const handleOpenChallenge = (content: { title: string; description: string; hint: string }) => {
     setModalContent(content)
@@ -111,6 +173,9 @@ Remember: The Matrix has you... Have fun and free your mind!`
     return new Date().toLocaleString('en-US', { hour12: false })
   }
 
+  // ----------------------------
+  // PROJECT INFO & SOCIAL INFO
+  // ----------------------------
   const projectInfo = {
     'Augmentium': {
       description: 'A decentralized stablecoin pegged to gold using CosmWasm smart contracts on the Cosmos ecosystem.',
@@ -202,6 +267,9 @@ Remember: The Matrix has you... Have fun and free your mind!`
     }
   }
 
+  // ----------------------------
+  // FILE SYSTEM
+  // ----------------------------
   const fileSystem: FileSystem = {
     home: {
       type: 'directory',
@@ -340,9 +408,12 @@ Extra Curricular Activities
     },
   }
 
+  // ----------------------------
+  // GAME LOCATIONS & STORY
+  // ----------------------------
   const gameLocations = {
     construct: {
-      description: "You find yourself in the Construct, a pristine white void. Before you stands a table with two pills - one red, one blue. Morpheus waits for your choice.",
+      description: "You find yourself in the Construct, a pristine white void. Before you stands a table with two pills - one red, one blue. Morpheus waits for your choice. Type 'look' or choose your pill.",
       availableCommands: [
         "look",
         "take red pill",
@@ -351,21 +422,8 @@ Extra Curricular Activities
         "examine pills"
       ]
     },
-    matrix: {
-      description: "Cascading green code fills your vision. The familiar city materializes around you, but now you see it for what it really is - a prison for the mind.",
-      availableCommands: [
-        "look",
-        "hack terminal",
-        "dodge bullet",
-        "find phone",
-        "fight agent",
-        "analyze code",
-        "solve challenge",
-        "submit_solution"
-      ]
-    },
     training: {
-      description: "You're in the Construct's training program. The dojo is minimalist, focused. Everything from weapons to training simulations is available here.",
+      description: "You're in the Construct's training program. A minimalist dojo stands ready, surrounded by racks of virtual weapons. This is where you learn to bend the rules of the Matrix.",
       availableCommands: [
         "look",
         "train combat",
@@ -375,8 +433,34 @@ Extra Curricular Activities
         "meditate"
       ]
     },
+    matrix: {
+      description: "Cascading green code shapes a city around you. Agents lurk in every shadow. A flickering neon sign reads 'Follow the White Rabbit'.",
+      availableCommands: [
+        "look",
+        "hack terminal",
+        "dodge bullet",
+        "find phone",
+        "fight agent",
+        "analyze code",
+        "solve challenge",
+        "submit_solution",
+        "enter oracle's temple"
+      ]
+    },
+    // NEW: Oracle's Temple for advanced puzzles and lore
+    oracleTemple: {
+      description: "You enter the Oracle's Temple. Incense drifts through the air. The walls are covered in cryptic symbols—a merging of Greek oracles and digital code. At the center is the Oracle, smiling calmly, waiting for you to ask the right question.",
+      availableCommands: [
+        "look",
+        "talk to oracle",
+        "offer cookies",
+        "ask question",
+        "decipher symbols"
+      ]
+    },
+    // Original location
     zion: {
-      description: "The last human city, deep beneath the Earth's surface. The air hums with machinery, and the hope of humanity surrounds you.",
+      description: "The last human city, deep beneath the Earth's surface. Machinery thrums all around, and the resistance stands on the brink of war.",
       availableCommands: [
         "look",
         "train skills",
@@ -387,7 +471,7 @@ Extra Curricular Activities
       ]
     },
     machineCity: {
-      description: "You've reached the heart of the machine world. Towering structures of metal and circuitry surround you. The fate of both humans and machines hangs in the balance.",
+      description: "You've reached the heart of the machine world. Towering structures hum with synthetic life. A single, monumental AI overseer stares down at you.",
       availableCommands: [
         "look",
         "negotiate",
@@ -398,6 +482,9 @@ Extra Curricular Activities
     }
   }
 
+  // ----------------------------
+  // HANDLE COMMANDS PER LOCATION
+  // ----------------------------
   const handleConstructCommands = (command: string) => {
     switch (command) {
       case 'take red pill':
@@ -408,19 +495,20 @@ Extra Curricular Activities
           health: Math.max(prev.health - 10, 0),
           inventory: [...prev.inventory, 'neural interface']
         }))
-        return "You take the red pill. The world dissolves around you as your mind is freed from the Matrix. You awaken to the harsh reality, ready to begin your training. Your health decreases slightly due to the shock."
-      
+        return "You swallow the red pill. Reality bends, the Construct fades, and you awaken groggily in a training simulation. Your health dips from the shock, but your awareness grows."
+
       case 'take blue pill':
         setGameState(prev => ({ ...prev, isGameOver: true }))
-        return "You take the blue pill. The simulation ends, leaving you to return to your comfortable prison. Game Over."
-      
+        return "You take the blue pill and drift back into comfortable ignorance. Game Over."
+
       case 'talk to morpheus':
         setGameState(prev => ({ ...prev, awareness: prev.awareness + 5 }))
-        return "Morpheus explains: 'You've felt it your entire life. Something is wrong with the world. You don't know what it is, but it's there, like a splinter in your mind, driving you mad.' Your awareness increases slightly."
-      
+        return "Morpheus: 'I can only show you the door. You're the one who has to walk through it.' Your awareness increases slightly."
+
       case 'examine pills':
         setGameState(prev => ({ ...prev, awareness: prev.awareness + 2 }))
-        return "The red pill represents the truth of reality, no matter how difficult. The blue pill offers the comfort of blissful ignorance. Your choice will determine your fate. Your awareness increases slightly as you contemplate the decision."
+        return "One pill to continue believing what you want, another to learn the truth of the Matrix. Awareness nudges upward as you ponder your choice."
+
       default:
         return "Unknown command. Type 'help' to see available commands."
     }
@@ -431,55 +519,57 @@ Extra Curricular Activities
       case 'train combat':
         if (Math.random() > 0.7) {
           setGameState(prev => ({ ...prev, awareness: prev.awareness + 15, health: Math.max(prev.health - 5, 0) }))
-          return "You practice martial arts in the dojo. Your movements become faster, more fluid. Your awareness of the system grows, but you sustain minor injuries."
+          return "You throw yourself into intense combat training. Your awareness leaps forward, but you take a few bruising hits."
         } else {
           setGameState(prev => ({ ...prev, awareness: prev.awareness + 10 }))
-          return "You practice martial arts in the dojo. Your movements become faster, more fluid. Your awareness of the system grows."
+          return "Your muscles memorize each move as you spar against simulated foes. Awareness rises steadily."
         }
-      
+
       case 'practice dodge':
         if (gameState.awareness >= 30) {
           if (Math.random() > 0.6) {
             setGameState(prev => ({ ...prev, awareness: prev.awareness + 20 }))
-            return "Time seems to slow as you move. You're beginning to see the code behind the bullets."
+            return "Bullets slow to a crawl as you twist your body. Your mastery of the Matrix grows quickly."
           } else {
             setGameState(prev => ({ ...prev, health: Math.max(prev.health - 15, 0) }))
-            return "You're not fast enough. A bullet grazes you, causing damage."
+            return "A near miss draws a line of pain across your arm. You're not fast enough yet."
           }
         } else {
-          return "You're not yet ready. Keep training to increase your awareness."
+          return "You feel the bullet whiz by before you can dodge. Perhaps you need higher awareness to pull this off consistently."
         }
-      
+
       case 'learn techniques':
-        setGameState(prev => ({ 
-          ...prev, 
+        setGameState(prev => ({
+          ...prev,
           awareness: prev.awareness + 10,
           inventory: [...prev.inventory, 'combat_training']
         }))
-        return "You absorb various combat techniques directly into your mind. The boundaries between the real and digital blur."
-      
+        return "A surge of data floods your mind. Krav Maga, Kung Fu, and more—knowledge instantly uploaded to your neural interface."
+
       case 'spar':
         if (Math.random() > 0.5) {
           setGameState(prev => ({ ...prev, awareness: prev.awareness + 10, health: Math.max(prev.health - 10, 0) }))
-          return "You spar with an AI simulation, testing your growing abilities. You take some hits but learn from the experience."
+          return "You trade blows with a skilled AI opponent. Pain is the best teacher, and you come away more aware but battered."
         } else {
           setGameState(prev => ({ ...prev, awareness: prev.awareness + 5 }))
-          return "You spar with an AI simulation, successfully avoiding most attacks."
+          return "You deftly deflect every strike. The AI can't touch you. Well done."
         }
-      
+
       case 'meditate':
         if (gameState.awareness >= 50) {
           setGameState(prev => ({ ...prev, location: 'matrix', health: Math.min(prev.health + 20, 100) }))
-          return "Through deep meditation, you achieve a new understanding of the Matrix. You're ready to re-enter the system. Your health improves as you center yourself."
+          return "You find inner calm, stepping beyond the boundaries of the Construct. The next time you open your eyes, you're in the Matrix. Your health improves."
         } else {
           setGameState(prev => ({ ...prev, awareness: prev.awareness + 5, health: Math.min(prev.health + 5, 100) }))
-          return "You meditate on the nature of reality. Continue training to increase your awareness. Your health improves slightly."
+          return "You clear your mind, aligning body and code. Awareness and health improve slightly. Keep training to unlock the next step."
         }
+
       default:
         return "Unknown command. Type 'help' to see available commands."
     }
   }
 
+  // Extended with possibility to enter Oracle’s Temple
   const handleMatrixCommands = (command: string, args: string[]): string | undefined => {
     switch (command) {
       case 'hack terminal':
@@ -498,12 +588,12 @@ Extra Curricular Activities
             awareness: prev.awareness + 15,
             inventory: [...prev.inventory, 'access_codes']
           }))
-          return `Success! You've hacked into a terminal. A new ${challengeType} challenge is available. Type 'solve challenge' to view and attempt the challenge.`
+          return `Success! You've hacked into a terminal. A new ${challengeType} challenge is available. Type 'solve challenge' to view it.`
         } else {
           setGameState(prev => ({ ...prev, awareness: Math.max(0, prev.awareness - 10), health: Math.max(prev.health - 20, 0) }))
-          return "The hack fails. Agents may have been alerted to your presence. Your awareness slightly decreases and you take damage from a system shock."
+          return "The hack triggers an alert. Agents swarm your location, and you escape with injuries. Awareness drops slightly."
         }
-      
+
       case 'solve challenge':
         if (currentChallenge) {
           setModalContent({
@@ -512,11 +602,9 @@ Extra Curricular Activities
             hint: currentChallenge.hint,
           })
           setIsModalOpen(true)
-          return `Challenge: ${currentChallenge.name}
-
-Opening challenge details. Please check the terminal window to view and attempt the challenge.`
+          return `Challenge: ${currentChallenge.name}\n\nOpening challenge details. Check the terminal window for the puzzle.`
         }
-        return "No active challenge. Hack a terminal first."
+        return "No active challenge. Try hacking a terminal."
 
       case 'check_solution':
         if (currentChallenge) {
@@ -531,45 +619,89 @@ Opening challenge details. Please check the terminal window to view and attempt 
             setCurrentChallenge(null)
             setIsModalOpen(false)
             setModalContent(null)
-            return "Correct! You've solved the challenge. Your awareness of the system has greatly increased, and you've gained a new item in your inventory."
+            return "Correct! You've outsmarted the system. Your awareness soars, and you collect a new item."
           } else {
             setGameState(prev => ({ ...prev, health: Math.max(prev.health - 10, 0) }))
-            return "Incorrect solution. The system's defenses have damaged you. Try again."
+            return "Wrong solution. The system retaliates, causing damage. Try again."
           }
         }
-        return "No active challenge or invalid command format."
-    default:
-      return undefined;
+        return "No active challenge or wrong format."
+
+      case 'enter oracle\'s temple':
+        if (gameState.awareness >= 40) {
+          setGameState(prev => ({ ...prev, location: 'oracleTemple' }))
+          return "You follow cryptic graffiti through a back alley. The world flickers, and you step into the Oracle’s Temple."
+        } else {
+          return "A strange door appears in the alley, but it remains firmly locked. Maybe you need more awareness to perceive it."
+        }
+
+      default:
+        return undefined
+    }
   }
+
+  // NEW: Oracle’s Temple Commands
+  const handleOracleTempleCommands = (command: string) => {
+    switch (command) {
+      case 'talk to oracle':
+        setGameState(prev => ({ ...prev, awareness: prev.awareness + 10 }))
+        return "The Oracle: 'You already know what I'm going to say, don't you?' A wave of insight hits you, increasing your awareness."
+
+      case 'offer cookies':
+        if (!gameState.inventory.includes('cookie_tin')) {
+          setGameState(prev => ({
+            ...prev,
+            inventory: [...prev.inventory, 'cookie_tin'],
+            awareness: prev.awareness + 5
+          }))
+          return "You hand the Oracle a tin of cookies you somehow have in your pack. She smiles knowingly. 'I knew you would.'"
+        } else {
+          return "She already has a tin of your cookies, and you sense too many sweets might break the simulation."
+        }
+
+      case 'ask question':
+        setGameState(prev => ({ ...prev, awareness: prev.awareness + 5 }))
+        return "You ask the Oracle about your destiny. She offers cryptic reassurance: 'Know thyself, and you shall know the path.'"
+
+      case 'decipher symbols':
+        if (Math.random() > 0.5) {
+          setGameState(prev => ({ ...prev, awareness: prev.awareness + 15 }))
+          return "You translate ancient texts that reference cycles of the One. The lines between code and prophecy blur in your mind."
+        } else {
+          setGameState(prev => ({ ...prev, health: Math.max(prev.health - 10, 0) }))
+          return "Your mind recoils from the riddles. Reality flickers, and you feel a sharp headache. You lose some health."
+        }
+      default:
+        return "Unknown command. Type 'help' to see available commands."
+    }
   }
 
   const handleZionCommands = (command: string) => {
     switch (command) {
       case 'train skills':
         setGameState(prev => ({ ...prev, awareness: prev.awareness + 25, health: Math.min(prev.health + 10, 100) }))
-        return "You spend time in the Zion combat simulator, honing your abilities to their peak. Your health improves slightly."
-      
+        return "You fine-tune your powers with top Zion warriors. Your awareness and health climb."
+
       case 'meet morpheus':
         setGameState(prev => ({ ...prev, awareness: prev.awareness + 15 }))
-        return "Morpheus shares wisdom about the nature of the Matrix: 'Remember, there is a difference between knowing the path and walking the path.' Your awareness increases."
-      
+        return "Morpheus shares new intel on Machine attacks. 'Hope is our most powerful weapon,' he says. Your awareness expands."
+
       case 'defend zion':
         if (gameState.awareness >= 90 && gameState.health >= 80) {
           setGameState(prev => ({ ...prev, location: 'machineCity' }))
-          return `Your leadership in defending Zion has been crucial. The machines have called for a parley. 
-You've been chosen to represent humanity in the Machine City. Prepare for the final confrontation.`
+          return "Your leadership repels a massive assault. The machines call for negotiation. You leave for the Machine City."
         } else if (gameState.awareness >= 90) {
           setGameState(prev => ({ ...prev, health: Math.max(prev.health - 30, 0) }))
-          return "Your awareness is high, but your physical condition isn't at its peak. You fight valiantly but sustain injuries. Zion survives, but at a great cost."
+          return "Zion stands, but you sustain wounds in the battle. You must recover before you confront the Machine City."
         } else {
           setGameState(prev => ({ ...prev, health: Math.max(prev.health - 50, 0) }))
-          return "The machines are too powerful. Zion suffers heavy losses, and you're severely injured. The resistance continues, but the future looks grim."
+          return "You fight bravely, but your underdeveloped awareness leaves you vulnerable. Heavy casualties burden Zion."
         }
-      
+
       case 'rally humans':
         setGameState(prev => ({ ...prev, awareness: prev.awareness + 15, health: Math.min(prev.health + 5, 100) }))
-        return "You share your knowledge and experiences, inspiring others to push their own boundaries of awareness. The unity boosts morale, slightly improving your health."
-      
+        return "You inspire the city with your tales of the Matrix. Morale surges, and your own health recovers a bit."
+
       case 'upgrade weapons':
         if (!gameState.inventory.includes('emp_device')) {
           setGameState(prev => ({ 
@@ -577,11 +709,12 @@ You've been chosen to represent humanity in the Machine City. Prepare for the fi
             inventory: [...prev.inventory, 'emp_device'],
             awareness: prev.awareness + 10
           }))
-          return "You help upgrade Zion's defensive capabilities, adding EMP devices to your arsenal. Your technical understanding improves, increasing your awareness."
+          return "You design a portable EMP that disrupts machine signals. Your understanding of the Matrix deepens."
         } else {
           setGameState(prev => ({ ...prev, awareness: prev.awareness + 5 }))
-          return "The weapons are already at their peak efficiency. You spend time fine-tuning them, gaining a slight increase in awareness."
+          return "You've already built the ultimate EMP, but you refine the design a bit, boosting your awareness."
         }
+
       default:
         return "Unknown command. Type 'help' to see available commands."
     }
@@ -589,84 +722,42 @@ You've been chosen to represent humanity in the Machine City. Prepare for the fi
 
   const handleMachineCityCommands = (command: string) => {
     switch (command) {
+      case 'look':
+        return gameLocations.machineCity.description
       case 'negotiate':
         if (gameState.awareness >= 95) {
           setGameState(prev => ({ ...prev, isGameOver: true }))
-          return `Your high level of awareness allows you to see the bigger picture. You successfully negotiate a truce between humans and machines, establishing a new era of coexistence. Congratulations, you've completed the Matrix simulation!|GAME_OVER`
+          return "Your expanded awareness helps you negotiate peace. Both man and machine find a new dawn. Congratulations—you’ve won!|GAME_OVER"
         } else {
-          return `Your attempt at negotiation fails. The machines do not believe in your sincerity or understanding. Keep trying or explore other options.`
+          return "Your arguments fall on deaf sensors. The Machine AI sees through your inexperience. Boost awareness and try again."
         }
+
       case 'fight':
         if (gameState.health >= 90) {
           setGameState(prev => ({ ...prev, isGameOver: true }))
-          return `You engage in an epic battle with the machines. Your peak physical condition allows you to overcome their defenses. You destroy the central AI, freeing humanity. However, the cost is high, and the future remains uncertain. You've completed the Matrix simulation!|GAME_OVER`
+          return "You unleash everything you've learned. Sparks fly as machine overlords crumble. Victory is yours, but the future remains uncertain. You have finished the Matrix Simulation!|GAME_OVER"
         } else {
           setGameState(prev => ({ ...prev, health: Math.max(prev.health - 40, 0) }))
-          return `You fight bravely, but the machines overpower you. You're severely injured. If your health reaches 0, the simulation will end.`
+          return "A fierce battle leaves you wounded. If health hits 0, you lose. You might need a different approach."
         }
+
       case 'sacrifice':
         setGameState(prev => ({ ...prev, isGameOver: true }))
-        return `You choose to sacrifice yourself to reset the Matrix, following the path of The One. Your decision brings temporary peace, but the cycle continues. You've completed the Matrix simulation with a bittersweet ending.|GAME_OVER`
+        return "You surrender yourself as a catalyst to restart the Matrix's cycle, hoping humanity gets another chance. Bittersweet ending.|GAME_OVER"
+
       case 'return':
         setGameState(prev => ({ ...prev, location: 'zion' }))
-        return `You decide the risk is too great and return to Zion to regroup and rethink your strategy.`
+        return "You retreat to Zion to regroup, your mind still reeling from the sheer scale of Machine City."
+
       default:
         return "Unknown command. Type 'help' to see available commands."
     }
   }
 
-  const handleGameCommand = (args: string[]) => {
-    const command = args.join(' ').toLowerCase()
-    const currentLocation = gameLocations[gameState.location as keyof typeof gameLocations]
-    
-    if (gameState.isGameOver) {
-      return "The simulation has ended. Type 'exit' to leave the game."
-    }
-
-    if (gameState.health <= 0) {
-      setGameState(prev => ({ ...prev, isGameOver: true }))
-      return "Your health has reached 0. The simulation has ended.|GAME_OVER"
-    }
-
-    // Universal commands available in all locations
-    switch (command) {
-      case 'look':
-        return currentLocation.description
-      case 'inventory':
-        return `Your inventory contains: ${gameState.inventory.join(', ') || 'nothing'}`
-      case 'status':
-        return `Your current awareness level is ${gameState.awareness}% and your health is ${gameState.health}%`
-      case 'help':
-        return `Available commands in ${gameState.location}:
-${currentLocation.availableCommands.join('\n')}
-
-Universal commands:
-- look: Examine your surroundings
-- inventory: Check your items
-- status: Check your awareness level and health
-- help: Show this help message
-- exit: Exit the game`
-    }
-
-    // Location-specific commands
-    if (currentLocation.availableCommands.includes(command)) {
-      switch (gameState.location) {
-        case 'construct':
-          return handleConstructCommands(command)
-        case 'training':
-          return handleTrainingCommands(command)
-        case 'matrix':
-          return handleMatrixCommands(command, args) || "Unknown command. Type 'help' to see available commands."
-        case 'zion':
-          return handleZionCommands(command)
-        case 'machineCity':
-          return handleMachineCityCommands(command)
-      }
-    }
-
-    return "Unknown command. Type 'help' to see available commands."
-  }
-
+  // ----------------------------
+  // COMBAT & CHALLENGE HANDLERS
+  // ----------------------------
+  // Expanded with Cicada 3301–style puzzles
   const cryptographicChallenges = [
     {
       name: 'Blockchain Basics',
@@ -686,12 +777,22 @@ Universal commands:
       solution: 'erc721',
       hint: 'It\'s a non-fungible token standard.',
     },
+    {
+      name: 'Cicada 3301 #1',
+      description: `
+In one of the famous Cicada 3301 puzzles, participants encountered cryptographic references to prime numbers and steganography. 
+This puzzle asks: "What large, commercially used cipher has a 128-bit block size and various key lengths from 128 to 256 bits?" 
+(Hint: It's often used in secure HTTPS connections.)
+      `.trim(),
+      solution: 'aes',
+      hint: 'It replaced DES officially.'
+    },
   ]
 
   const codingChallenges = [
     {
       name: 'Anime Trivia',
-      description: 'In "Ghost in the Shell", what is the name of the cyber-brain augmentation virus that allows hackers to take over people\'s minds?',
+      description: 'In "Ghost in the Shell", what is the name of the cyber-brain virus that allows hackers to take over minds?',
       solution: 'puppet master',
       hint: 'It\'s also known as Project 2501.',
     },
@@ -699,13 +800,22 @@ Universal commands:
       name: 'Matrix Knowledge',
       description: 'What is the name of the last human city in The Matrix?',
       solution: 'zion',
-      hint: 'It\'s located near the Earth\'s core.',
+      hint: 'Located near the Earth’s core.',
     },
     {
       name: 'Cyberpunk Anime',
-      description: 'In "Akira", what is the name of the powerful psychic force that Tetsuo develops?',
+      description: 'In "Akira", what is the name of the powerful psychic force that Tetsuo awakens?',
       solution: 'akira',
-      hint: 'The movie shares its name with this power.',
+      hint: 'The film shares its name with this power.',
+    },
+    {
+      name: 'Cicada 3301 #2',
+      description: `
+Cicada 3301 famously posted images with hidden messages. One method to find them is to look at the least significant bits of an image or to extract text from the image file. 
+What is this general technique called?
+      `.trim(),
+      solution: 'steganography',
+      hint: 'Hiding messages in plain sight.'
     },
   ]
 
@@ -722,15 +832,18 @@ Universal commands:
         setCurrentChallenge(null)
         setIsModalOpen(false)
         setModalContent(null)
-        return "Correct! You've solved the challenge. Your awareness of the system has greatly increased, and you've gained a new item in your inventory."
+        return "Correct! The puzzle unravels, and you gain deeper insight into the Matrix. Your awareness spikes."
       } else {
         setGameState(prev => ({ ...prev, health: Math.max(prev.health - 10, 0) }))
-        return "Incorrect solution. The system's defenses have damaged you. Try again."
+        return "Incorrect. The system’s defense punishes your mistake. Try again or look for more clues."
       }
     }
     return "No active challenge or invalid command format."
   }
 
+  // ----------------------------
+  // FILE OPERATIONS
+  // ----------------------------
   const handleFileOperation = (operation: 'read' | 'write', fileName: string, content?: string) => {
     switch (operation) {
       case 'read':
@@ -741,6 +854,9 @@ Universal commands:
     }
   }
 
+  // ----------------------------
+  // MAIN COMMANDS OBJECT
+  // ----------------------------
   const commands: Record<string, (args?: string[]) => string | JSX.Element | Promise<string>> = {
     help: () => `Available commands:
 ℹ  help     - Show this help message
@@ -764,17 +880,17 @@ Universal commands:
 🐙 github   - Open my GitHub profile
 🐦 twitter  - Open my Twitter profile
 💼 linkedin - Open my LinkedIn profile
+📱 telegram - Open my Telegram profile
 📄 cat      - Display the content of a file
 🖥️  gui      - Switch to GUI mode
-📱 telegram - Open my Telegram profile
-Matrix Simulation Game Commands:
-- look: Examine your surroundings
-- inventory: Check your items
-- status: Check your awareness level and health
-- [action]: Perform the action shown in the location description
-- help: Show this help message
+Matrix Simulation Game Commands (once in "play"):
+- look
+- inventory
+- status
+- help
+- exit
+... plus various location-based commands like "take red pill", "hack terminal", etc.`,
 
-Your goal is to increase your awareness, navigate through the Matrix, and ultimately reach and defend Zion.`,
     about: () => {
       setInfoModalContent({
         title: 'About Rudransh Shinghal',
@@ -811,6 +927,7 @@ Your goal is to increase your awareness, navigate through the Matrix, and ultima
       setTimeout(() => setIsInfoModalOpen(true), 100);
       return "Opening about information...";
     },
+
     skills: () => `My skills include:
 🚀 JavaScript
 🔷 TypeScript
@@ -826,6 +943,7 @@ Your goal is to increase your awareness, navigate through the Matrix, and ultima
 ⚛ React
 🌐 WebAssembly
 🔧 Git`,
+
     projects: () => {
       setInfoModalContent({
         title: 'My Projects',
@@ -859,15 +977,18 @@ Your goal is to increase your awareness, navigate through the Matrix, and ultima
       setTimeout(() => setIsInfoModalOpen(true), 100)
       return "Opening projects information..."
     },
+
     contact: () => `You can reach me at:
 📧 Email: rudransh9shinghal@gmail.com
 💼 LinkedIn: rudransh-shinghal-264b37206
 🐦 Twitter: rudransh190204
 📱 Telegram: That_guy_Rudransh`,
+
     ascii: () => asciiArt,
     clear: () => 'CLEAR',
     echo: (args) => args ? args.join(' ') : '',
     date: () => getTimestamp(),
+
     ls: (args) => {
       let targetPath = currentPath
       if (args && args.length > 0) {
@@ -889,6 +1010,7 @@ Your goal is to increase your awareness, navigate through the Matrix, and ultima
       
       return [...fileSystemEntries, ...userFiles].join('\n')
     },
+
     cd: (args): string => {
       if (!args || args.length === 0) {
         setCurrentPath(['home', 'user'])
@@ -906,7 +1028,9 @@ Your goal is to increase your awareness, navigate through the Matrix, and ultima
         return `cd: ${args[0]}: Not a directory`
       }
     },
+
     pwd: () => '/' + currentPath.join('/'),
+
     touch: (args) => {
       if (!args || args.length === 0) {
         return 'touch: missing file operand'
@@ -918,6 +1042,7 @@ Your goal is to increase your awareness, navigate through the Matrix, and ultima
       setFiles(prevFiles => ({...prevFiles, [fileName]: ''}))
       return `Created file: ${fileName}`
     },
+
     vim: (args) => {
       if (!args || args.length === 0) {
         return 'vim: missing file operand'
@@ -931,7 +1056,9 @@ Your goal is to increase your awareness, navigate through the Matrix, and ultima
       setIsVimModalOpen(true)
       return `Opening ${fileName} in vim...`
     },
+
     play: () => {
+      // RESET the game
       setGameState({
         location: 'construct',
         inventory: [],
@@ -941,19 +1068,20 @@ Your goal is to increase your awareness, navigate through the Matrix, and ultima
       })
       return `Welcome to the Matrix Simulation!
 
-You find yourself in the Construct, a loading program for the Matrix. Your mission is to navigate both the real and digital worlds, increase your awareness, and ultimately help defend Zion.
+You find yourself in the Construct, a loading program for the Matrix. 
+Your mission: navigate the real and digital worlds, raise your awareness, and defend Zion.
 
-How to play:
-1. Use "look" to examine your surroundings
-2. Use "inventory" to check your items
-3. Use "status" to check your awareness level and health
-4. Type actions directly (e.g., "take red pill", "hack terminal", etc.)
-5. Use "help" to see available commands in your current location
+Commands:
+- "look" to examine your surroundings
+- "inventory" to view your items
+- "status" to check awareness & health
+- Type context-sensitive commands ("take red pill", "hack terminal", etc.)
+- "help" shows location-specific commands
+- "exit" ends the game
 
-Remember: "Free your mind."
-
-Type "look" to begin your journey.`
+Free your mind. Type "look" to begin.`
     },
+
     game: (args) => {
       const [gameCommand, ...gameArgs] = args || []
       if (gameCommand === 'check_solution') {
@@ -961,6 +1089,7 @@ Type "look" to begin your journey.`
       }
       return handleGameCommand(args || [])
     },
+
     grep: (args) => {
       if (!args || args.length === 0) {
         return 'Usage: grep <search_term> [file_name]'
@@ -1019,42 +1148,51 @@ Type "look" to begin your journey.`
         return results.length > 0 ? results.join('\n') : 'No matches found'
       }
     },
+
     resume: () => {
       const resumeUrl = 'https://drive.google.com/file/d/1ejcVHLxkwZoVUDEWsMetoirEUWg4Et_1/view?usp=drive_link'
       window.open(resumeUrl, '_blank')
       return 'Opening resume in a new tab...'
     },
+
     'close_modal': () => {
       setIsModalOpen(false)
       setModalContent(null)
       return "Modal closed."
     },
+
     'close_info_modal': () => {
       setIsInfoModalOpen(false)
       setInfoModalContent({ title: '', content: null })
       return "Modal closed."
     },
-    'close_vim_modal': () => { // Added close function for Vim Modal
+
+    'close_vim_modal': () => {
       setIsVimModalOpen(false)
       setIsVimActive(false)
       return "Vim modal closed."
     },
+
     github: () => {
       window.open(socialInfo.github.url, '_blank')
       return `Opening GitHub profile: ${socialInfo.github.url}`
     },
+
     twitter: () => {
       window.open(socialInfo.twitter.url, '_blank')
       return `Opening Twitter profile: ${socialInfo.twitter.url}`
     },
+
     linkedin: () => {
       window.open(socialInfo.linkedin.url, '_blank')
       return `Opening LinkedIn profile: ${socialInfo.linkedin.url}`
     },
+
     telegram: () => {
       window.open(socialInfo.telegram.url, '_blank')
       return `Opening Telegram chat: ${socialInfo.telegram.url}`
     },
+
     cat: (args) => {
       if (!args || args.length === 0) {
         return 'Usage: cat <filename>'
@@ -1080,6 +1218,7 @@ Type "look" to begin your journey.`
       }
       return file.content
     },
+
     write: (args) => {
       if (!args || args.length < 2) {
         return "Usage: write <filename> <content>"
@@ -1088,6 +1227,7 @@ Type "look" to begin your journey.`
       const content = args.slice(1).join(' ')
       return handleFileOperation('write', fileName, content)
     },
+
     read: (args) => {
       if (!args || args.length === 0) {
         return "Usage: read <filename>"
@@ -1095,8 +1235,12 @@ Type "look" to begin your journey.`
       const fileName = args[0]
       return handleFileOperation('read', fileName)
     },
+
     gui: () => {
       return "Switching to GUI mode..."
+    },
+    kernel: () => {
+      return "Initiating Freed OS kernel... Please wait."
     },
     warpcast: () => {
       window.open('https://warpcast.com/kakashi-hatake19', '_blank')
@@ -1104,6 +1248,9 @@ Type "look" to begin your journey.`
     },
   }
 
+  // ----------------------------
+  // UTILITY FUNCTIONS
+  // ----------------------------
   function resolvePath(path: string): string[] {
     if (path === '/') {
       return []
@@ -1145,14 +1292,67 @@ Type "look" to begin your journey.`
     return current
   }
 
-  const executeCommand = (command: string): string | JSX.Element | Promise<string> => {
-    const [cmd, ...args] = command.trim().split(' ')
-    if (cmd in commands) {
-      return commands[cmd](args)
+  function handleGameCommand(args: string[]) {
+    const command = args.join(' ').toLowerCase()
+    const currentLocation = gameLocations[gameState.location as keyof typeof gameLocations]
+
+    if (gameState.isGameOver) {
+      return "The simulation is over. Type 'exit' to stop playing."
     }
-    return `Command not found: ${command}. Type 'help' for a list of available commands.`
+
+    if (gameState.health <= 0) {
+      setGameState(prev => ({ ...prev, isGameOver: true }))
+      return "Your health hit 0. You collapse, and the simulation ends.|GAME_OVER"
+    }
+
+    // Universal commands
+    switch (command) {
+      case 'look':
+        return currentLocation.description
+      case 'inventory':
+        return `Inventory: ${gameState.inventory.join(', ') || 'Empty'}`
+      case 'status':
+        return `Awareness: ${gameState.awareness}%, Health: ${gameState.health}%`
+      case 'help':
+        return `Available commands in ${gameState.location}:
+${currentLocation.availableCommands.join('\n')}
+
+Universal commands:
+- look
+- inventory
+- status
+- help
+- exit (ends the simulation)
+`
+      case 'exit':
+        setGameState(prev => ({ ...prev, isGameOver: true }))
+        return "Exiting the Matrix simulation. Thanks for playing!"
+    }
+
+    // Location-specific
+    if (currentLocation.availableCommands.includes(command)) {
+      switch (gameState.location) {
+        case 'construct':
+          return handleConstructCommands(command)
+        case 'training':
+          return handleTrainingCommands(command)
+        case 'matrix':
+          return handleMatrixCommands(command, args) || "Unknown command. Type 'help' to see available commands."
+        case 'oracleTemple':
+          return handleOracleTempleCommands(command)
+        case 'zion':
+          return handleZionCommands(command)
+        case 'machineCity':
+          return handleMachineCityCommands(command)
+      }
+    }
+
+    return "Unknown command. Type 'help' to see available commands."
   }
 
+  // ----------------------------
+  // HOOK RETURN
+  // ----------------------------
   const resetGame = useCallback(() => {
     setGameState({
       location: 'construct',
@@ -1172,7 +1372,19 @@ Type "look" to begin your journey.`
     setTimeout(() => {
       setIsModalOpen(false)
       setModalContent(null)
-    }, 300) // 300ms delay
+    }, 300)
+  }
+
+  const executeCommand = (command: string): string | JSX.Element | Promise<string> => {
+    const [cmd, ...args] = command.trim().split(' ')
+    if (cmd === 'kernel') {
+      // Signal to the terminal component that we should enter Freed OS mode
+      return 'ENTER_FREED_OS'
+    }
+    if (cmd in commands) {
+      return commands[cmd](args)
+    }
+    return `Command not found: ${command}. Type 'help' for a list of available commands.`
   }
 
   return { 
